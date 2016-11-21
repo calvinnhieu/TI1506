@@ -205,7 +205,6 @@ Access-Control-Allow-Credentials: true
 
 8.1)
 
-_Create a mockup of the splash screen_<br/>
 Name: To Done<br/>
 Description: A web app for all your TODO list needs.<br/>
 Logo: A checkmark<br/>
@@ -213,8 +212,7 @@ Audience: Teens, young adults
 
 8.2)
 
-_Create a design of the todo list page_
-Features: create/delete item, add deadline to item, add priority to item, +2 more
+![alt-text](wireframes.jpg)
 
 8.3)
 
