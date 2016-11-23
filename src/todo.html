@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+	<script src="todo.js"></script>
 	<title>To Done - A web app for all your todo list needs </title>
 	</head>
 
@@ -19,52 +20,56 @@
 					<li>Personal</li>
 					<li>Groceries</li>
 				</ul>
-			</div>	
-			
-			<div id="right-collumn">	
+			</div>
+
+			<div id="right-collumn">
 				<nav>
 					<button type="button" class="filter-time-btn"> Chronological</button>
 					<button type="button" class="filter-priority-btn">Priority</button>
 				</nav>
-			
-				<button type="button" class="add-btn">+</button></li>
-				<ul>
-					<li> 				
-						<!-- Add module -->
-						<div class="add_module">
-							<form>
-								create<br/>
-								<input type="text" class="desc-input" value="Description">
-								<input type="text" class="date-input" value="Date">
-								<input type="text" class="label-input" value="Label">
-								<input type="text" class="notes-input" value="Notes">
-								<input type="text" class="priority-input" value="Priority 1-3">
-								<button type="button" class="finish-add-btn">Done</button>
-							</form>
-						</div>
-					</li>
-				
+
+				<button type="button" class="add-btn">+Add TODO</button></li>
+				<!-- Add module -->
+				<div class="add-module">
+					<form>
+						Create<br/>
+						<input type="text" class="add-desc-input" placeholder="Description">
+						<input type="text" class="add-date-input" placeholder="Due date">
+						<input type="text" class="add-label-input" placeholder="Label">
+						<input type="text" class="add-notes-input" placeholder="Notes">
+						<input type="text" class="add-priority-input" placeholder="Priority 1-3">
+						<button type="button" class="finish-add-btn">Done</button>
+					</form>
+				</div>
+
+				<div class="todos-container">
+					<ul class="todos-list">
+
+					</ul>
+				</div>
+
+				<ul hidden>
 					<li>
 						<!-- Edit module -->
 						<div class="edit_module">
 							<form>
 								edit <br/>
-								<input type="text" class="desc-input" value="Description">
-								<input type="text" class="date-input" value="Date">
-								<input type="text" class="label-input" value="Label">
-								<input type="text" class="notes-input" value="Notes">
-								<input type="text" class="priority-input" value="Priority 1-3">
+								<input type="text" class="desc-input" placeholder="Description">
+								<input type="text" class="date-input" placeholder="Date">
+								<input type="text" class="label-input" placeholder="Label">
+								<input type="text" class="notes-input" placeholder="Notes">
+								<input type="text" class="priority-input" placeholder="Priority 1-3">
 								<button type="button" class="finish-edit-btn">Done</button>
 							</form>
 						</div>
 					</li>
-				
-				
+
+
 					<li>
 						<!-- Todo item -->
 						<div class="todo_item">
 							<form>
-								<button type="button" class="finish-btn">DONE</button>
+								<button type="button" class="complete-btn">DONE</button>
 								some item name
 								<button type="button" class="edit-btn"> edit</button>
 								<button type="button" class="delete-btn"> delete</button>
@@ -75,4 +80,4 @@
 			</div>
 		</main>
 	</body>
-</html>	
+</html>
