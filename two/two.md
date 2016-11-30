@@ -1,4 +1,55 @@
 #A2
+Plan of actions:
+
+```
+Add todo:
+(create) Button, click/Shift+N, expand add module
+(done) Button, click/Enter, render a new todo list item
+
+Delete todo:
+Button, click/Delete, (grey animation) remove todo item from list
+
+Complete todo:
+Checkbox, click/Enter, (green animation) remove todo item from list
+
+Edit todo:
+(edit) Button, click/‘e’, expand filled in add module under todo list item
+(done) Button, click/Enter, collapse add module
+
+Sort by due date:
+Button, click/Shift+T, render todo list by due date
+
+Sort by importance:
+Button, click/Shift+P, render todo list by priority
+
+Label todo:
+Input field, type.
+```
+Object oriented part
+
+```
+
+Todo {
+	id
+	description
+	createDate
+	dueDate
+	notes
+	priority
+	labels[]
+	completed
+	deleted
+}
+TodoList {
+	Todo[]
+	sortByDate()
+	sortByPriority()
+}
+Label {
+	id
+	name
+}
+```
 ##5
 
 SELECT VERSION();
