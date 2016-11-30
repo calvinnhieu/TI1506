@@ -1,38 +1,42 @@
 <!doctype html>
 <html>
 	<head>
-	<script src="todo.js"></script>
-	<title>To Done - A web app for all your todo list needs </title>
+		<link rel="stylesheet" type="text/css" href="reset.css">
+		<link rel="stylesheet" type="text/css" href="app.css">
+		<link rel="shortcut icon" href="favicon-check-square-o.ico" type="image/x-icon"/>
+		<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+		<script src="https://use.fontawesome.com/90aa293136.js"></script>
+		<script src="todo.js"></script>
+		<title>ToDone</title>
 	</head>
 
 	<body>
 		<header>
-			<nav>
-				<a href="#"> About</a> |
-				<a href="#"> Log in</a> |
+			<nav class="header">
+				<div>
+					<a class="mar-right-1" href="index.html">
+						<i class="fa fa-check-square-o"></i>
+					</a>
+					<a href="#">About</a>
+				</div>
+				<a href="#">Log in</a>
 			</nav>
 		</header>
-		<main>
-			<div id="left-collumn">
-				<h1> Labels</h1>
+		<main class="app-content flex flex-row mar-top-3">
+			<div class="labels-container mar-right-3">
+				<p class="mar-bot-1">Labels</p>
 				<ul class="labels">
 				</ul>
 			</div>
 
-			<div id="right-collumn">
-				<nav>
-					<button type="button" class="filter-time-btn"> Chronological</button>
-					<button type="button" class="filter-priority-btn">Priority</button>
-				</nav>
-
-				<button type="button" class="add-btn">+Add TODO</button></li>
+			<div class="flex-grow">
+				<button type="button" class="add-btn mar-bot-1">+ToDo</button></li>
 				<!-- Add module -->
-				<div class="add-module">
+				<div class="add-module mar-bot-3">
 					<form>
-						Create<br/>
+						New<br/>
 						<input type="text" class="add-desc-input" placeholder="Description">
-						<input type="text" class="add-date-input" placeholder="Due date">
-						<input type="text" class="add-label-input" placeholder="Labels">
+						<input type="text" class="add-date-input" placeholder="Due date"> <input type="text" class="add-label-input" placeholder="Labels">
 						<input type="text" class="add-notes-input" placeholder="Notes">
 						<input type="text" class="add-priority-input" placeholder="Priority (1-3)">
 						<button type="button" class="finish-add-btn">Done</button>
@@ -40,40 +44,15 @@
 				</div>
 
 				<div class="todos-container">
+					<p>ToDo List</p>
+					<nav class="mar-bot-1">
+						<span class="s-font light-text">Sort by </span>
+						<button type="button" class="filter-time-btn">Due</button>
+						<button type="button" class="filter-priority-btn">Priority</button>
+					</nav>
 					<ul class="todos-list">
-
 					</ul>
 				</div>
-
-				<ul hidden>
-					<li>
-						<!-- Edit module -->
-						<div class="edit_module">
-							<form>
-								edit <br/>
-								<input type="text" class="desc-input" placeholder="Description">
-								<input type="text" class="date-input" placeholder="Date">
-								<input type="text" class="label-input" placeholder="Label">
-								<input type="text" class="notes-input" placeholder="Notes">
-								<input type="text" class="priority-input" placeholder="Priority (1-3)">
-								<button type="button" class="finish-edit-btn">Done</button>
-							</form>
-						</div>
-					</li>
-
-
-					<li>
-						<!-- Todo item -->
-						<div class="todo_item">
-							<form>
-								<button type="button" class="complete-btn">DONE</button>
-								some item name
-								<button type="button" class="edit-btn"> edit</button>
-								<button type="button" class="delete-btn"> delete</button>
-							</form>
-						</div>
-					</li>
-				</ul>
 			</div>
 		</main>
 	</body>

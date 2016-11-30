@@ -119,9 +119,18 @@ var todoModule = (function () {
     renderTodos();
   }
 
+  function uncompleteTodo(index) {
+    todos[index].completed = false;
+    renderTodos();
+  }
+
   function deleteTodo(index) {
     todos[index].deleted = true;
     renderTodos();
+  }
+
+  function isTodoOverdue(index) {
+    return false;
   }
 
   // consolidates new labels
@@ -139,21 +148,49 @@ var todoModule = (function () {
   function renderTodo(index) {
     // create html elements and append to todos <ul> element
     var li = document.createElement('li');
+    var todoContainer = document.createElement('div');
+    todoContainer.className += " todo-item flex flex-row";
+    var left = document.createElement('div');
+    var right = document.createElement('div');
     var desc = document.createElement('span').appendChild(document.createTextNode(todos[index].description));
-    var date = document.createElement('span').appendChild(document.createTextNode('Due: '+todos[index].dueDate+' '));
+    var date = document.createElement('span').appendChild(document.createTextNode(todos[index].dueDate+' '));
     var labels = document.createElement('span').appendChild(document.createTextNode('Labels: '+todos[index].getLabelString()+' '));
     var notes = document.createElement('span').appendChild(document.createTextNode('Notes: '+todos[index].notes+' '));
-    var priority = document.createElement('span').appendChild(document.createTextNode('Priority: '+todos[index].priority+' '));
+    var priority = document.createElement('div');
+    priority.style.width = '20px';
+    switch (todos[index].priority) {
+      case '1':
+        priority.className += ' priority-1';
+        break;
+      case '2':
+        priority.className += ' priority-2';
+        break;
+      case '3':
+        priority.className += ' priority-3';
+        break;
+      default:
+        console.log('invalid priority');
+        break;
+    }
     var complete;
     if (todos[index].completed) {
-      complete = document.createElement('span');
+      complete = document.createElement('i');
+      complete.className += "fa fa-check-square-o";
+      complete.onclick = function() {
+        uncompleteTodo(index);
+      }
+      todoContainer.className += " todo-item-complete";
     } else {
+      if (isTodoOverdue(index)) {
+        todoContainer.className += " todo-item-overdue";
+      }
       complete = document.createElement('button');
+      complete.appendChild(document.createTextNode('Complete'));
       complete.onclick = function() {
         completeTodo(index);
       };
     }
-    complete.appendChild(document.createTextNode('DONE'));
+    complete.className += " mar-right-2";
     var editBtn = document.createElement('button');
     editBtn.appendChild(document.createTextNode('edit'));
     var dltBtn = document.createElement('button');
@@ -166,14 +203,18 @@ var todoModule = (function () {
       deleteTodo(index);
     };
     // append to html
-    li.appendChild(complete);
-    li.appendChild(desc);
-    // li.appendChild(date);
+    left.appendChild(priority);
+    left.appendChild(complete);
+    left.appendChild(desc);
+    todoContainer.appendChild(left);
+    right.appendChild(date);
+    right.appendChild(editBtn);
+    right.appendChild(dltBtn);
+    todoContainer.appendChild(right);
+    li.appendChild(todoContainer);
     // li.appendChild(labels);
     // li.appendChild(notes);
     // li.appendChild(priority);
-    li.appendChild(editBtn);
-    li.appendChild(dltBtn);
     if (todos[index].isEditing) {
       renderEditModule(li, index);
     }
@@ -237,6 +278,7 @@ var todoModule = (function () {
   function renderLabel(label, parent) {
     // console.log(labels[label].name);
     var li = document.createElement('li');
+    li.className += ' light-text';
     var span = document.createElement('span').appendChild(document.createTextNode(labels[label].name));
     li.appendChild(span);
     parent.appendChild(li);
