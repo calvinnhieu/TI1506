@@ -79,6 +79,10 @@ var todoModule = (function () {
   function addTodoFromServer(todosserver){
     console.log("Loading todos from server");
     var testen = JSON.parse(todosserver);
+    console.log(testen);
+    for (var key in testen) {
+      console.log(testen[key]);
+    };
   };
 
   function addTodoFromInput() {
