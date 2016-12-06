@@ -51,8 +51,6 @@ function Label(name) {
 };
 
 var t1 = new Todo('test', 'test', 'test', 'test', 'test' );
-todos.push(JSON.stringify(t1));
-console.log(t1);
 todos.push(t1)
 
 //clients requests todos
@@ -66,16 +64,18 @@ app.get("/addtodo", function (req, res) {
 	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;
 
-	if(query["message"]!==undefined) {
-		var tx = { message : query["message"],
-			type: query["type"],
-			deadline: query["deadline"]
-		};
+	if(query["desc"]!==undefined) {
+    var desc = query["desc"];
+    var dueDate = query["dueDate"];
+    var labels = query["labels"];
+    var notes = query["notes"];
+    var priority = query["priority"];
+		var tx = new Todo(desc, dueDate, labels, notes, priority);
 		todos.push(tx);
 		console.log("Added " + tx.message);
 		res.end("Todo added successfully");
 	}
 	else {
-		res.end("Error: missing message parameter");
+		res.end("Error: missing description parameter");
 	}
 });
