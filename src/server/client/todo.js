@@ -50,6 +50,13 @@ var todoModule = (function () {
   // sets onclick/event listeners
   function init() {
     console.log('init');
+
+    $.getJSON("../todos", addTodoFromServer)
+			.error(function (jqXHR, textStatus, errorThrown) {
+				console.log("error " + textStatus);
+				console.log("incoming Text " + jqXHR.responseText);
+			});
+
     document.getElementsByClassName('add-module')[0].style.display = 'none';
 
     var filterTimeBtn = document.getElementsByClassName('filter-time-btn')[0];
@@ -67,6 +74,11 @@ var todoModule = (function () {
 
     var finishAddBtn = document.getElementsByClassName('finish-add-btn')[0];
     finishAddBtn.onclick = addTodoFromInput;
+  };
+
+  function addTodoFromServer(todosserver){
+    console.log("Loading todos from server");
+    var testen = JSON.parse(todosserver);
   };
 
   function addTodoFromInput() {
