@@ -51,7 +51,7 @@ function Label(name) {
 };
 
 var t1 = new Todo('test', 'test', 'test', 'test', 'test' );
-todosJSON.push(JSON.stringify(t1));
+todos.push(JSON.stringify(t1));
 console.log(t1);
 todos.push(t1)
 
