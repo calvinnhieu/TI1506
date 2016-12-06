@@ -53,8 +53,8 @@ function Label(name) {
 var t1 = new Todo('test', 'test', 'test', 'test', 'test' );
 var t2 = new Todo('test2', 'test2', 'test2', 'test2', 'test2' );
 
-todos.push(JSON.stringify(t1));
-todos.push(JSON.stringify(t2));
+todos.push(t1);
+todos.push(t2);
 
 //clients requests todos
 app.get("/todos", function (req, res) {
