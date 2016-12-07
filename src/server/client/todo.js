@@ -2,7 +2,7 @@
 var todoModule = (function () {
   'use strict';
   // array of all todos
-  var todos = [];
+  var todos = []
   // map of all labels
   var labels = {};
   // called when html, scripts, and assets have loaded
@@ -23,15 +23,17 @@ var todoModule = (function () {
     this.completed = false;
     this.deleted = false;
     this.isEditing = false;
-
-    this.getLabelString = function() {
-      var labelString = '';
-      for (var i=0; i<labels.length; i++) {
-        labelString += labels[i];
-      }
-      return labelString;
-    }
   };
+
+  function getLabelString(labels) {
+    var labelString = '';
+    for (var i=0; i<labels.length; i++) {
+      labelString += labels[i];
+    }
+    return labelString;
+  };
+
+
 
   // TodoList object
   function TodoList() {
@@ -50,12 +52,8 @@ var todoModule = (function () {
   // sets onclick/event listeners
   function init() {
     console.log('init');
-
-    $.getJSON("../todos", addTodoFromServer)
-			.error(function (jqXHR, textStatus, errorThrown) {
-				console.log("error " + textStatus);
-				console.log("incoming Text " + jqXHR.responseText);
-			});
+    var emptydata = ''
+    $.post('/getTodos', emptydata, addTodoFromServer, 'json');
 
     document.getElementsByClassName('add-module')[0].style.display = 'none';
 
@@ -78,13 +76,14 @@ var todoModule = (function () {
 
   function addTodoFromServer(todosserver){
     console.log("Loading todos from server");
-    var testen = JSON.parse(todosserver);
-    console.log("JSON todos string:");
-    console.log(testen);
-    // todos.push(testen);
-    // console.log(todos)
-    // saveLabels(todos.labels);
-    // render();
+    console.log('Default object');
+    console.log(todosserver);
+    todos = todosserver;
+    console.log('todos array');
+    console.log(todos)
+    saveLabels(labels);
+    render();
+
   };
 
   function addTodoFromInput() {
@@ -95,7 +94,12 @@ var todoModule = (function () {
     var notes = document.getElementsByClassName('add-notes-input')[0].value;
     var priority = document.getElementsByClassName('add-priority-input')[0].value;
     // create new Todo, add to todos array
-    todos.push(new Todo(desc, dueDate, labels, notes, priority));
+    var newTodo = new Todo(desc, dueDate, labels, notes, priority)
+    todos.push(newTodo);
+    $.post('/addTodo', newTodo, function(response) {
+    // Do something with the request
+    console.log('new todo to server')
+}, 'json');
     console.log(todos);
     saveLabels(labels);
     clearAddModule();
@@ -173,7 +177,7 @@ var todoModule = (function () {
     var right = document.createElement('div');
     var desc = document.createElement('span').appendChild(document.createTextNode(todos[index].description));
     var date = document.createElement('span').appendChild(document.createTextNode(todos[index].dueDate+' '));
-    var labels = document.createElement('span').appendChild(document.createTextNode('Labels: '+todos[index].getLabelString()+' '));
+    var labels = document.createElement('span').appendChild(document.createTextNode('Labels: '+getLabelString(todos[index].labels)+' '));
     var notes = document.createElement('span').appendChild(document.createTextNode('Notes: '+todos[index].notes+' '));
     var priority = document.createElement('div');
     priority.style.width = '20px';
@@ -257,7 +261,7 @@ var todoModule = (function () {
     priorityInput.placeholder = 'Priority (1-3)';
     descInput.value = todos[index].description;
     dateInput.value = todos[index].dueDate;
-    labelInput.value = todos[index].getLabelString();
+    labelInput.value = getLabelString(todos[index].labels);
     notesInput.value = todos[index].notes;
     priorityInput.value = todos[index].priority;
     finishEditBtn.appendChild(document.createTextNode('Save'));
