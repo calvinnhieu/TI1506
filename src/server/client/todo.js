@@ -27,6 +27,7 @@ var todoModule = (function () {
     this.isEditing = false;
   };
 
+
   function getLabelString(labels) {
     var labelString = '';
     for (var i=0; i<labels.length; i++) {
@@ -55,7 +56,7 @@ var todoModule = (function () {
   function init() {
     console.log('init');
     var emptydata = ''
-    $.post('/getTodos', emptydata, addTodoFromServer, 'json');
+    $.post('/getTodos', emptydata, initServer, 'json');
 
     document.getElementsByClassName('add-module')[0].style.display = 'none';
     document.getElementsByClassName('add-list-module')[0].style.display = 'none';
@@ -98,16 +99,22 @@ var todoModule = (function () {
         return;
       }
     }
-    lists.push(new TodoList(name));
+    var newList = new TodoList(name)
+    lists.push(newList);
     toggleElementVisibility('add-list-module');
+    $.post('/addList', newList, function(response) {
+    // Do something with the request
+    console.log('new list to server')
+}, 'json');
     render();
   }
 
-  function addTodoFromServer(todosserver){
-    console.log("Loading todos from server");
+  function initServer(todosserver){
+    console.log("Loading lists and todos from server");
     console.log('Default object');
     console.log(todosserver);
-    todos = todosserver;
+    todos = todosserver.todos;
+    lists = todosserver.lists;
     console.log('todos array');
     console.log(todos)
     saveLabels(labels);
@@ -124,13 +131,12 @@ var todoModule = (function () {
     var priority = document.getElementsByClassName('add-priority-input')[0].value;
     // create new Todo, add to todos array
     var newTodo = new Todo(desc, dueDate, labels, notes, priority)
+
     lists[currentList].todos.push(newTodo);
-    // todos.push(newTodo);
-    $.post('/addTodo', newTodo, function(response) {
-    // Do something with the request
-    console.log('new todo to server')
-}, 'json');
-    // console.log(todos);
+    $.post('/addTodo', JSON.stringify(newTodo), function(response) {
+      // Do something with the request
+      console.log('new todo to server')
+    });
     saveLabels(labels);
     clearAddModule();
     console.log(lists[currentList].todos[lists[currentList].todos.length-1]);

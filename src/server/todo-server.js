@@ -13,6 +13,7 @@ http.createServer(app).listen(port);
 var todosJSON = [];
 
 // from todo.js
+var lists = [];
 var todos = [];
 var labels = {};
 
@@ -31,7 +32,9 @@ function Todo(desc, dueDate, labels, notes, priority) {
 };
 
 // TodoList object
-function TodoList() {
+function TodoList(listName) {
+  this.id = -1;
+  this.name = listName;
   this.todos = [];
   this.sortByDate = function() {};
   this.sortByPriority = function() {};
@@ -44,23 +47,34 @@ function Label(name) {
   this.count = 1;
 };
 
+//data
+function data(todos, lists) {
+  this.todos = todos;
+  this.lists = lists;
+};
+
 //add some test todos
 todos.push(new Todo('test', 'test', '', 'test', 'test'));
 todos.push(new Todo('test2', 'test2', '', 'test', 'test'));
+var newList = new TodoList('Eerste')
+lists.push(newList);
+
 
 //ENDPOINTS
 //for debugging
 app.get("/todos", function (req, res) {
 	console.log("todos requested!");
-	res.json(todos);
+  var datapayload = new data(todos, lists);
+	res.json(datapayload);
 });
 
-//Client requests ToDo
+//Client requests todo and lists
 app.post("/getTodos", function (req, res) {
   //get UserID
   console.log('todos gotten')
-  res.send(JSON.stringify(todos));
-  res.end("All todos")
+  var datapayload = new data(todos, lists);
+  res.send(JSON.stringify(datapayload));
+  res.end("All data")
   //return all TodoLists, Todos
 
 });
@@ -74,8 +88,25 @@ app.post("/addTodo", function (req, res) {
   console.log(Todo)
 	if(Todo["id"]!==undefined) {
     todos.push(Todo);
-		console.log("Added " + Todo["description"]);
+		console.log("Added todo" + Todo["description"]);
 		res.end("Todo added successfully");
+	}
+	else {
+		res.end("Error: missing ID parameter");
+	}
+});
+
+//Client adds List
+app.post("/addList", function (req, res) {
+  //get a List object from Client
+  console.log(req.body)
+  res.end('ok')
+  var List = req.body
+  console.log(Todo)
+	if(List["id"]!==undefined) {
+    lists.push(List);
+		console.log("Added list " + List["name"]);
+		res.end("List added successfully");
 	}
 	else {
 		res.end("Error: missing ID parameter");
