@@ -79,10 +79,12 @@ var todoModule = (function () {
   function addTodoFromServer(todosserver){
     console.log("Loading todos from server");
     var testen = JSON.parse(todosserver);
-    todos.push(testen);
-    console.log(todos)
-    saveLabels(todos.labels);
-    render();
+    console.log("JSON todos string:");
+    console.log(testen);
+    // todos.push(testen);
+    // console.log(todos)
+    // saveLabels(todos.labels);
+    // render();
   };
 
   function addTodoFromInput() {

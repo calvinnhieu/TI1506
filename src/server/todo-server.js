@@ -50,16 +50,15 @@ function Label(name) {
   this.count = 1;
 };
 
-var t1 = new Todo('test', 'test', '', 'test', 'test');
-//var t2 = new Todo('test2', 'test2', 'test2', 'test2', 'test2');
+//add some test todos
+todos.push(new Todo('test', 'test', '', 'test', 'test'));
+todos.push(new Todo('test2', 'test2', '', 'test', 'test'));
 
-todos.push(JSON.stringify(t1));
-//todos.push(JSON.stringify(t2));
 
 //clients requests todos
 app.get("/todos", function (req, res) {
 	console.log("todos requested!");
-	res.json(todos);
+	res.json(JSON.stringify(todos));
 });
 
 //add todo to the server
