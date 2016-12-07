@@ -80,6 +80,7 @@ var todoModule = (function () {
     console.log("Loading todos from server");
     var testen = JSON.parse(todosserver);
     todos.push(testen);
+    console.log(todos)
     saveLabels(todos.labels);
     render();
   };
@@ -93,6 +94,7 @@ var todoModule = (function () {
     var priority = document.getElementsByClassName('add-priority-input')[0].value;
     // create new Todo, add to todos array
     todos.push(new Todo(desc, dueDate, labels, notes, priority));
+    console.log(todos);
     saveLabels(labels);
     clearAddModule();
     console.log(todos[todos.length-1]);
