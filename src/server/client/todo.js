@@ -1,6 +1,7 @@
 // module to create private namespace
 var todoModule = (function () {
   'use strict';
+  var lists = [];
   // array of all todos
   var todos = []
   // map of all labels
@@ -36,7 +37,9 @@ var todoModule = (function () {
 
 
   // TodoList object
-  function TodoList() {
+  function TodoList(listName) {
+    this.id = -1;
+    this.name = listName;
     this.todos = [];
     this.sortByDate = function() {};
     this.sortByPriority = function() {};
@@ -56,6 +59,7 @@ var todoModule = (function () {
     $.post('/getTodos', emptydata, addTodoFromServer, 'json');
 
     document.getElementsByClassName('add-module')[0].style.display = 'none';
+    document.getElementsByClassName('add-list-module')[0].style.display = 'none';
 
     var filterTimeBtn = document.getElementsByClassName('filter-time-btn')[0];
     filterTimeBtn.onclick = function() {
@@ -68,11 +72,36 @@ var todoModule = (function () {
     };
 
     var addBtn = document.getElementsByClassName('add-btn')[0];
-    addBtn.onclick = toggleAddModule;
+    addBtn.onclick = function() {
+      toggleElementVisibility(document.getElementsByClassName('add-module')[0]);
+    };
+
+    var addListBtn = document.getElementsByClassName('add-list-btn')[0];
+    addListBtn.onclick = function() {
+      toggleElementVisibility(document.getElementsByClassName('add-list-module')[0]);
+    };
 
     var finishAddBtn = document.getElementsByClassName('finish-add-btn')[0];
     finishAddBtn.onclick = addTodoFromInput;
+
+    var finishAddListBtn = document.getElementsByClassName('finish-add-list-btn')[0];
+    finishAddListBtn.onclick = function() {
+      var name = document.getElementsByClassName('list-name-input')[0].value;
+      addList(name);
+    };
+    render();
   };
+
+  function addList(name) {
+    for (var i = 0; i < lists.length; i++) {
+      if (lists[i].name === name) {
+        console.error('You can not have lists with the same name');
+        return;
+      }
+    }
+    lists.push(new TodoList(name));
+    render();
+  }
 
   function addTodoFromServer(todosserver){
     console.log("Loading todos from server");
@@ -107,14 +136,18 @@ var todoModule = (function () {
     render();
   }
 
-  // hides/shows add todo module
-  function toggleAddModule() {
-    var addModule = document.getElementsByClassName('add-module')[0];
+  function toggleElementVisibility(el) {
     // set element's CSS
-    if (addModule.style.display === 'none') {
-      addModule.style.display = 'block';
+    if (el.style.display === 'none') {
+      el.style.display = 'block';
     } else {
-      addModule.style.display = 'none';
+      el.style.display = 'none';
+    }
+  }
+
+  function removeChildren(el) {
+    while (el.firstChild) {
+      el.removeChild(el.firstChild);
     }
   }
 
@@ -284,16 +317,34 @@ var todoModule = (function () {
 
   // re-renders list of todos
   function renderTodos() {
+    document.getElementsByClassName('add-btn')[0].style.display = 'block';
+    document.getElementsByClassName('todos-container')[0].style.display = 'block';
+    var listSelect = document.getElementsByClassName('list-select')[0].children[0];
+    var selectedListName = listSelect.options[listSelect.selectedIndex].text;
+    document.getElementsByClassName('list-label')[0].innerHTML = selectedListName;
     var todosList = document.getElementsByClassName('todos-list')[0];
     // remove all todos from view
-    while (todosList.firstChild) {
-      todosList.removeChild(todosList.firstChild);
-    }
+    removeChildren(todosList);
     // repopulate todos view
     for (var i=0; i<todos.length; i++) {
       if (!todos[i].deleted) {
         renderTodo(i);
       }
+    }
+  }
+
+  // renders list dropdown
+  function renderListSelect() {
+    var container = document.getElementsByClassName('list-select')[0];
+    removeChildren(container);
+    var listSelect = document.createElement('select');
+    listSelect.onchange = renderTodos;
+    container.appendChild(listSelect);
+    var option;
+    for (var i=0; i<lists.length; i++) {
+      option = document.createElement('option');
+      option.innerHTML = lists[i].name;
+      listSelect.appendChild(option);
     }
   }
 
@@ -311,9 +362,7 @@ var todoModule = (function () {
   function renderLabels() {
     var labelsList = document.getElementsByClassName('labels')[0];
     // clear labels list
-    while (labelsList.firstChild) {
-      labelsList.removeChild(labelsList.firstChild);
-    }
+    removeChildren(labelsList);
     // repopulate labels list
     var currentLabels = Object.keys(labels);
     for (var i=0; i<currentLabels.length; i++) {
@@ -323,8 +372,14 @@ var todoModule = (function () {
   }
 
   function render() {
-    renderLabels();
-    renderTodos();
+    renderListSelect();
+    if (lists.length > 0) {
+      renderLabels();
+      renderTodos();
+    } else {
+      document.getElementsByClassName('add-btn')[0].style.display = 'none';
+      document.getElementsByClassName('todos-container')[0].style.display = 'none';
+    }
   }
 
 

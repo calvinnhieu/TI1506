@@ -31,7 +31,18 @@
 			</div>
 
 			<div class="flex-grow">
-				<button type="button" class="add-btn mar-bot-1">+ToDo</button></li>
+				<div>
+					<div class="list-select"></div>
+					<button class="add-list-btn mar-bot-1">+List</button>
+					<div class="add-list-module mar-bot-3">
+						<form>
+							New List<br/>
+							<input type="text" class="list-name-input" placeholder="Name">
+							<button type="button" class="finish-add-list-btn">Create</button>
+						</form>
+					</div>
+				</div>
+				<button class="add-btn mar-bot-1">+ToDo</button>
 				<!-- Add module -->
 				<div class="add-module mar-bot-3">
 					<form>
@@ -45,7 +56,7 @@
 				</div>
 
 				<div class="todos-container">
-					<p>ToDo List</p>
+					<p class="list-label">ToDo List</p>
 					<nav class="mar-bot-1">
 						<span class="s-font light-text">Sort by </span>
 						<button type="button" class="filter-time-btn">Due</button>

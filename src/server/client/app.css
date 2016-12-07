@@ -84,7 +84,7 @@ button:hover {
   margin-left: 150px;
   justify-content: center;
 }
-.add-module {
+.add-btn, .todos-container, .add-module, .add-list-module {
   display: none;
 }
 .labels-container {
