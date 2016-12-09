@@ -16,6 +16,7 @@ var todoModule = (function () {
   // Todo object
   function Todo(desc, dueDate, labels, notes, priority) {
     this.id = -1;
+    this.listid
     this.description = desc;
     this.createDate = '';
     this.dueDate = dueDate;
@@ -113,10 +114,10 @@ var todoModule = (function () {
     console.log("Loading lists and todos from server");
     console.log('Default object');
     console.log(todosserver);
-    todos = todosserver.todos;
+    TodoList.todos = todosserver.todos;
     lists = todosserver.lists;
     console.log('todos array');
-    console.log(todos)
+    console.log(TodoList.todos)
     saveLabels(labels);
     render();
 
