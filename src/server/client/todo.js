@@ -191,7 +191,7 @@ var todoModule = (function () {
   }
 
   function deleteTodo(index) {
-    lists[currentList].todos[index].deleted = true;
+    lists[currentList].todos.splice(index, 1);
     renderTodos();
   }
 
@@ -230,32 +230,37 @@ var todoModule = (function () {
     var right = document.createElement('div');
     var desc = document.createElement('span').appendChild(document.createTextNode(lists[currentList].todos[index].description));
     var date = document.createElement('span').appendChild(document.createTextNode(lists[currentList].todos[index].dueDate+' '));
+    var priority = document.createElement('span');
+    var priorityIcon = document.createElement('i');
+    priorityIcon.className += 'fa fa-sort';
+    priority.appendChild(priorityIcon);
+    priority.appendChild(document.createTextNode(' ' + lists[currentList].todos[index].priority + ' '));
     var labels = document.createElement('span').appendChild(document.createTextNode('Labels: '+getLabelString(lists[currentList].todos[index].labels)+' '));
     var notes = document.createElement('span').appendChild(document.createTextNode('Notes: '+lists[currentList].todos[index].notes+' '));
-    var priority = document.createElement('div');
-    priority.style.width = '20px';
     switch (lists[currentList].todos[index].priority) {
       case '1':
         priority.className += ' priority-1';
+        left.appendChild(priority);
         break;
       case '2':
         priority.className += ' priority-2';
+        left.appendChild(priority);
         break;
       case '3':
         priority.className += ' priority-3';
+        left.appendChild(priority);
         break;
       default:
-        console.log('invalid priority');
+        // console.log('invalid priority');
         break;
     }
     var complete;
     if (lists[currentList].todos[index].completed) {
       complete = document.createElement('i');
-      complete.className += "fa fa-check-square-o";
+      complete.className += "fa fa-check-square-o todo-item-complete";
       complete.onclick = function() {
         uncompleteTodo(index);
       }
-      todoContainer.className += " todo-item-complete";
     } else {
       if (isTodoOverdue(index)) {
         todoContainer.className += " todo-item-overdue";
@@ -279,7 +284,6 @@ var todoModule = (function () {
       deleteTodo(index);
     };
     // append to html
-    left.appendChild(priority);
     left.appendChild(complete);
     left.appendChild(desc);
     todoContainer.appendChild(left);
@@ -290,7 +294,6 @@ var todoModule = (function () {
     li.appendChild(todoContainer);
     // li.appendChild(labels);
     // li.appendChild(notes);
-    // li.appendChild(priority);
     if (lists[currentList].todos[index].isEditing) {
       renderEditModule(li, index);
     }
