@@ -2,7 +2,24 @@
 var express = require("express");
 var url = require("url");
 var http = require("http");
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var mysql = require('mysql');
+var config = require('./config.js');
+
+var connection = mysql.createConnection({
+	host	: 'localhost',
+	port	: 3306,
+	user	: 'root',
+	password: config.mysql_password,
+	database: config.database
+});
+connection.connect(function(err) {
+  if (err) {
+    console.error('<<<Error connecting to Db>>>');
+    return;
+  }
+  console.log('>>>>DB Connection established');
+});
 
 //settings and default vars
 var port = 3000;
@@ -82,6 +99,7 @@ app.post("/getTodos", function (req, res) {
 //Client adds Todo
 app.post("/addTodo", function (req, res) {
   //get a Todo object from Client
+  // connection.query('INSERT INTO todos')
   console.log(req.body)
   res.end('ok')
   var Todo = req.body
