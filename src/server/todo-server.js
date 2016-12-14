@@ -196,3 +196,41 @@ app.post("/deleteTodo", function (req, res) {
   });
 	console.log("delete Todo!");
 });
+
+//analytics endpoints
+
+//List Todoslist from given user
+//user id
+app.post("/listListUser", function (req, res) {
+  connection.query('SELECT * FROM todo.todo_list WHERE owner_id =  ' + req.body.id, function(err, result) {
+    if (err) {
+      console.error(err);
+    }
+    console.log('List lists from user todo');
+    res.json(result);
+  });
+});
+
+//List Todolist for given Todo
+// list id
+app.post("/listTodoList", function (req, res) {
+  connection.query('SELECT * FROM todo.todo_item WHERE todo_list_id = ' + req.body.id, function(err, result) {
+    if (err) {
+      console.error(err);
+    }
+    console.log('List todos from given list');
+    res.json(result);
+  });
+});
+
+//Paginated list Todolist for given Todo
+//list id, lowLim, hiLim
+app.post("/paglistTodoList", function (req, res) {
+  connection.query('SELECT * FROM todo.todo_item WHERE todo_list_id = ' +  req.body.id +' LIMIT ' + req.body.lowLim + ', ' + req.body.hiLim, function(err, result) {
+    if (err) {
+      console.error(err);
+    }
+    console.log('List todos from given list with pagination');
+    res.json(result);
+  });
+});
