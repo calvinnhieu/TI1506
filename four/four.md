@@ -146,7 +146,158 @@ mysql> SELECT * FROM todo.ToDoItem WHERE ParentToDo = 22;
 
 ```
 
-5: input
+6: input
+
+`Select Text, ToDoId from todo.Tag T JOIN todo.ItemTag IT on T.id = IT.TagId HAVING ToDoId = 1;`
+output:
+
+```
+mysql> Select Text, ToDoId from todo.Tag T JOIN todo.ItemTag IT on T.id = IT.TagId HAVING ToDoId = 1;
++---------+--------+
+| Text    | ToDoId |
++---------+--------+
+| webdata |      1 |
+| school  |      1 |
++---------+--------+
+2 rows in set (0,00 sec)
+
+```
+
+7: input
+
+`SELECT DISTINCT ToDoListId, TagId FROM todo.ToDoItem TDI JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING TagId = 3;
+`
+output:
+
+```
+mysql> SELECT DISTINCT ToDoListId, TagId FROM todo.ToDoItem TDI JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING TagId = 3;
++------------+-------+
+| ToDoListId | TagId |
++------------+-------+
+|          1 |     3 |
+|          3 |     3 |
++------------+-------+
+2 rows in set (0,01 sec)
+
+```
+
+8: input
+
+`SELECT TagId, COUNT(*) as Total, completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId GROUP BY IT.TagId HAVING completed = 1;`
+output:
+
+```
+mysql> SELECT TagId, COUNT(*) as Total, completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId GROUP BY IT.TagId HAVING completed = 1;
++-------+-------+-----------+
+| TagId | Total | completed |
++-------+-------+-----------+
+|     1 |    13 |         1 |
+|     2 |     3 |         1 |
+|     3 |    19 |         1 |
++-------+-------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT TagId, COUNT(*) as Total, completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId GROUP BY IT.TagId HAVING completed = 0;
++-------+-------+-----------+
+| TagId | Total | completed |
++-------+-------+-----------+
+|     4 |     2 |         0 |
+|     5 |     8 |         0 |
++-------+-------+-----------+
+2 rows in set (0.00 sec)
+
+```
+
+9: input
+Always 0, no ToDo's are completed this year
+
+`SELECT YEARWEEK(CompletionDate) as yearweek, COUNT(*) as count FROM todo.ToDoItem WHERE YEARWEEK(CompletionDate) = 201601;`
+output:
+
+```
+mysql> SELECT YEARWEEK(CompletionDate) as yearweek, COUNT(*) as count FROM todo.ToDoItem WHERE YEARWEEK(CompletionDate) = 201601;
++----------+-------+
+| yearweek | count |
++----------+-------+
+|     NULL |     0 |
++----------+-------+
+1 row in set (0.00 sec)
+```
+
+10: input
+
+```
+SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 1 ORDER BY datedif ASC LIMIT 0,10;
+SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 2 ORDER BY datedif ASC LIMIT 0,10;
+SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 3 ORDER BY datedif ASC LIMIT 0,10;
+SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 4 ORDER BY datedif ASC LIMIT 0,10;
+SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 5 ORDER BY datedif ASC LIMIT 0,10;
+
+
+```
+output:
+
+```
+mysql> SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 1 ORDER BY datedif ASC LIMIT 0,10;
++------------------------------+-------+---------+-----------+
+| Title                        | TagId | datedif | Completed |
++------------------------------+-------+---------+-----------+
+| Do assignment 1              |     1 |       0 |         1 |
+| Assignment 2                 |     1 |       0 |         1 |
+| Second part of 2             |     1 |       0 |         1 |
+| Create database for students |     1 |       0 |         1 |
+| Do HTML part of assignment 1 |     1 |       1 |         1 |
+| First part of 2              |     1 |       1 |         1 |
+| Do telnet exercises          |     1 |       2 |         1 |
+| Assignment 4 part 1          |     1 |       2 |         1 |
+| Assignemnt 3 part 1          |     1 |       4 |         1 |
+| Assignment 3 part 2          |     1 |       4 |         1 |
++------------------------------+-------+---------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 2 ORDER BY datedif ASC LIMIT 0,10;
++---------+-------+---------+-----------+
+| Title   | TagId | datedif | Completed |
++---------+-------+---------+-----------+
+| Leg day |     2 |       0 |         1 |
++---------+-------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 3 ORDER BY datedif ASC LIMIT 0,10;
++------------------------------+-------+---------+-----------+
+| Title                        | TagId | datedif | Completed |
++------------------------------+-------+---------+-----------+
+| Do assignment 1              |     3 |       0 |         1 |
+| Assignment 2                 |     3 |       0 |         1 |
+| Second part of 2             |     3 |       0 |         1 |
+| Create database for students |     3 |       0 |         1 |
+| Do HTML part of assignment 1 |     3 |       1 |         1 |
+| First part of 2              |     3 |       1 |         1 |
+| Do telnet exercises          |     3 |       2 |         1 |
+| Assignment 4 part 1          |     3 |       2 |         1 |
+| Finish chapter 2             |     3 |       4 |         1 |
+| Assignemnt 3 part 1          |     3 |       4 |         1 |
++------------------------------+-------+---------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 4 ORDER BY datedif ASC LIMIT 0,10;
+Empty set (0.00 sec)
+
+mysql> SELECT Title, TagId, DATEDIFF(DueDate,CompletionDate) as datedif, Completed FROM todo.ToDoItem TDI LEFT JOIN todo.ItemTag IT ON TDI.Id = IT.ToDoId HAVING Completed = 1 AND TagId = 5 ORDER BY datedif ASC LIMIT 0,10;
++------------------------------+-------+---------+-----------+
+| Title                        | TagId | datedif | Completed |
++------------------------------+-------+---------+-----------+
+| Leg day                      |     5 |       0 |         1 |
+| Visit grandma                |     5 |       0 |         1 |
+| Create database for students |     5 |       0 |         1 |
+| Vacuum                       |     5 |       2 |         1 |
++------------------------------+-------+---------+-----------+
+4 rows in set (0.00 sec)
+
+```
+
+11: ??????
+input
 
 ``
 output:
@@ -155,13 +306,35 @@ output:
 
 ```
 
-5: input
+12: input
 
-``
+`SELECT AVG(datediff(I.CompletionDate, I.CreationDate)) as Average FROM todo.ToDoList L JOIN todo.ToDoItem I ON L.Id = I.ToDoListId WHERE L.Id =3 AND I.Completed = 1;`
 output:
 
 ```
+mysql> SELECT AVG(datediff(I.CompletionDate, I.CreationDate)) as Average FROM todo.ToDoList L JOIN todo.ToDoItem I ON L.Id = I.ToDoListId WHERE L.Id =3 AND I.Completed = 1;
++---------+
+| Average |
++---------+
+| 34.3333 |
++---------+
+
 
 ```
 
+13: input
+
+`SELECT I.Title, datediff(I.CompletionDate, I.CreationDate) as Difference FROM todo.ToDoList L JOIN todo.ToDoItem I ON L.Id = I.ToDoListId WHERE L.Id =3 AND I.Completed = 1 GROUP BY Title Having Difference > (SELECT AVG(datediff(I.CompletionDate, I.CreationDate)) as Average FROM todo.ToDoList L JOIN todo.ToDoItem I ON L.Id = I.ToDoListId WHERE L.Id =3 AND I.Completed = 1 );`
+output:
+
+```
+mysql> SELECT I.Title, datediff(I.CompletionDate, I.CreationDate) as Difference FROM todo.ToDoList L JOIN todo.ToDoItem I ON L.Id = I.ToDoListId WHERE L.Id =3 AND I.Completed = 1 GROUP BY Title Having Difference > (SELECT AVG(datediff(I.CompletionDate, I.CreationDate)) as Average FROM todo.ToDoList L JOIN todo.ToDoItem I ON L.Id = I.ToDoListId WHERE L.Id =3 AND I.Completed = 1 );
++------------------+------------+
+| Title            | Difference |
++------------------+------------+
+| Finish chapter 1 |         60 |
+| Finish chapter 2 |         41 |
++------------------+------------+
+2 rows in set (0.00 sec)
+```
 
