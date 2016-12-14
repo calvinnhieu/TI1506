@@ -102,6 +102,12 @@ var todoModule = (function () {
       addList(name);
     };
     render();
+
+    setInterval(function() {
+      $.post('/getLists', null, parseLists, 'json');
+      $.post('/getTodos', null, parseTodos, 'json');
+      $.post('/getLabels', null, parseLabels, 'json');
+    }, 5000);
   };
 
   function addList(listId, uid, name) {
