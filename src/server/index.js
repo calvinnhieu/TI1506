@@ -23,7 +23,6 @@ app.get('/template', function(req, res) {
     if (err) {
       console.error(err);
     }
-		console.log(result);
 		res.render('todos', {todos: result});
   });
 });
