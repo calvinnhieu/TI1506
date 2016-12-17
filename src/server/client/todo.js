@@ -63,10 +63,19 @@ var todoModule = (function () {
     document.getElementsByClassName('add-module')[0].style.display = 'none';
     document.getElementsByClassName('add-list-module')[0].style.display = 'none';
 
+    var darkTheme = document.getElementsByClassName('dark-theme')[0];
+    darkTheme.onclick = function() {
+      setTheme('dark');
+    };
+    var lightTheme = document.getElementsByClassName('light-theme')[0];
+    lightTheme.onclick = function() {
+      setTheme('light');
+    };
+
     var filterTimeBtn = document.getElementsByClassName('filter-time-btn')[0];
     filterTimeBtn.onclick = function() {
       console.log('filter by time');
-    }
+    };
 
     var filterPriorityBtn = document.getElementsByClassName('filter-priority-btn')[0];
     filterPriorityBtn.onclick = function() {
@@ -101,7 +110,7 @@ var todoModule = (function () {
     };
     render();
 
-    setInterval(update, 2000);
+    // setInterval(update, 2000);
   };
 
   // TODO: support multiple users
@@ -109,6 +118,11 @@ var todoModule = (function () {
     $.get('/getLists/1', null, parseLists, 'json');
     $.get('/getTodos/1', null, parseTodos, 'json');
     $.get('/getLabels', null, parseLabels, 'json');
+  }
+
+  function setTheme(theme) {
+    Cookies.set('theme', theme);
+    renderHeader();
   }
 
   function addList(listId, uid, name) {
@@ -471,7 +485,16 @@ var todoModule = (function () {
     }
   }
 
+  function renderHeader() {
+    var theme = Cookies.get('theme');
+    if (theme) {
+      var header = document.getElementsByClassName('header')[0];
+      header.className = 'header ' + theme;
+    }
+  }
+
   function render() {
+    renderHeader();
     renderListSelect();
     if (Object.keys(lists).length > 0) {
       renderLabels();

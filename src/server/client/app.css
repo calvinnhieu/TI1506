@@ -100,7 +100,12 @@ button[data-desc]:hover::after {
   display: flex;
   justify-content: space-between;
   padding: 15px;
+}
+.header.light {
   background: #eee;
+}
+.header.dark {
+  background: #555;
 }
 .index-content {
   height: 75vh;
