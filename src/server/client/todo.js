@@ -58,9 +58,7 @@ var todoModule = (function () {
   // sets onclick/event listeners
   function init() {
     console.log('init');
-    $.post('/getLists', null, parseLists, 'json');
-    $.post('/getTodos', null, parseTodos, 'json');
-    $.post('/getLabels', null, parseLabels, 'json');
+    update();
 
     document.getElementsByClassName('add-module')[0].style.display = 'none';
     document.getElementsByClassName('add-list-module')[0].style.display = 'none';
@@ -103,12 +101,15 @@ var todoModule = (function () {
     };
     render();
 
-    setInterval(function() {
-      $.post('/getLists', null, parseLists, 'json');
-      $.post('/getTodos', null, parseTodos, 'json');
-      $.post('/getLabels', null, parseLabels, 'json');
-    }, 5000);
+    setInterval(update, 2000);
   };
+
+  // TODO: support multiple users
+  function update() {
+    $.get('/getLists/1', null, parseLists, 'json');
+    $.get('/getTodos/1', null, parseTodos, 'json');
+    $.get('/getLabels', null, parseLabels, 'json');
+  }
 
   function addList(listId, uid, name) {
     for (var id in lists) {

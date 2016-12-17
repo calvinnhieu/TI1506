@@ -23,9 +23,10 @@ app.get("/todoss?", function (req, res) {
 });
 
 //Client requests todo lists
-app.post("/getListss?", function (req, res) {
+app.get("/getListss?/:uid", function (req, res) {
+	var uid = req.params.uid;
   //get UserID
-  db.query('select * from todo_list', function(err, result) {
+  db.query('select * from todo_list where owner_id = ' + uid, function(err, result) {
     if (err) {
       console.error(err);
     }
@@ -35,9 +36,10 @@ app.post("/getListss?", function (req, res) {
 });
 
 //Client requests todo lists
-app.post("/getTodoo?ss?", function (req, res) {
+app.get("/getTodoo?ss?/:uid", function (req, res) {
+	var uid = req.params.uid;
   //get UserID
-  db.query('select * from todo_item', function(err, result) {
+  db.query('select ti.* from todo_item as ti join todo_list as tl on ti.list_id = tl.id where tl.owner_id = ' + uid, function(err, result) {
     if (err) {
       console.error(err);
     }
@@ -46,7 +48,8 @@ app.post("/getTodoo?ss?", function (req, res) {
   });
 });
 
-app.post("/getLabell?s", function (req, res) {
+app.get("/getLabell?s", function (req, res) {
+	var uid = req.params.uid;
   //get UserID
   db.query('select * from label', function(err, result) {
     if (err) {
