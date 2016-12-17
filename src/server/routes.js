@@ -9,22 +9,21 @@ var db = require('./db.js');
 
 db.connect();
 //settings and default vars
-var port = 3000;
 var app = express();
 app.use(bodyParser());
 app.use(express.static(__dirname + "/client"));
-http.createServer(app).listen(port);
+http.createServer(app).listen(config.port);
 
 //ENDPOINTS
 //for debugging
-app.get("/todos", function (req, res) {
+app.get("/todoss?", function (req, res) {
 	console.log("todos requested!");
   var datapayload = new data(todos, lists);
 	res.json(datapayload);
 });
 
 //Client requests todo lists
-app.post("/getLists", function (req, res) {
+app.post("/getListss?", function (req, res) {
   //get UserID
   db.query('select * from todo_list', function(err, result) {
     if (err) {
@@ -36,7 +35,7 @@ app.post("/getLists", function (req, res) {
 });
 
 //Client requests todo lists
-app.post("/getTodos", function (req, res) {
+app.post("/getTodoo?ss?", function (req, res) {
   //get UserID
   db.query('select * from todo_item', function(err, result) {
     if (err) {
@@ -47,7 +46,7 @@ app.post("/getTodos", function (req, res) {
   });
 });
 
-app.post("/getLabels", function (req, res) {
+app.post("/getLabell?s", function (req, res) {
   //get UserID
   db.query('select * from label', function(err, result) {
     if (err) {
@@ -60,7 +59,7 @@ app.post("/getLabels", function (req, res) {
 
 //Client adds Todo
 //TODO: fix date input
-app.post("/addTodo", function (req, res) {
+app.post("/addTodos?", function (req, res) {
   console.log('add todo');
   console.log(req.body);
   var todo = {
@@ -83,7 +82,7 @@ app.post("/addTodo", function (req, res) {
 });
 
 //Client adds List
-app.post("/addList", function (req, res) {
+app.post("/addLists?", function (req, res) {
   //get a List object from Client
   // console.log(req.body)
   // res.end('ok')
@@ -101,7 +100,7 @@ app.post("/addList", function (req, res) {
 
 
 //Client updates Todo
-app.post("/updateTodo", function (req, res) {
+app.post("/updateTodoo?", function (req, res) {
   var id = req.body.id;
   var todo = {
     list_id: req.body.data.listId,
@@ -124,7 +123,7 @@ app.post("/updateTodo", function (req, res) {
 
 
 //Client deletes Todo
-app.post("/deleteTodo", function (req, res) {
+app.post("/deleteTodoo?", function (req, res) {
   db.query('delete from todo_item where id = ' + req.body.id, function(err, result) {
     if (err) {
       console.error(err);
@@ -139,7 +138,7 @@ app.post("/deleteTodo", function (req, res) {
 
 //List Todoslist from given user
 //user id
-app.post("/listListUser", function (req, res) {
+app.post("/listListUserr?", function (req, res) {
   db.query('SELECT * FROM todo.todo_list WHERE owner_id =  ' + req.body.id, function(err, result) {
     if (err) {
       console.error(err);
@@ -151,7 +150,7 @@ app.post("/listListUser", function (req, res) {
 
 //List Todolist for given Todo
 // list id
-app.post("/listTodoList", function (req, res) {
+app.post("/listTodoLists?", function (req, res) {
   db.query('SELECT * FROM todo.todo_item WHERE todo_list_id = ' + req.body.id, function(err, result) {
     if (err) {
       console.error(err);
@@ -163,7 +162,7 @@ app.post("/listTodoList", function (req, res) {
 
 //Paginated list Todolist for given Todo
 //list id, lowLim, hiLim
-app.post("/paglistTodoList", function (req, res) {
+app.post("/paglistTodoListt?", function (req, res) {
   db.query('SELECT * FROM todo.todo_item WHERE todo_list_id = ' +  req.body.id +' LIMIT ' + req.body.lowLim + ', ' + req.body.hiLim, function(err, result) {
     if (err) {
       console.error(err);
