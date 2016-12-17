@@ -1,0 +1,23 @@
+{
+  "name": "todone-app",
+  "version": "0.0.5",
+  "description": "A ToDo app created for TI1506 at TU Delft.",
+  "author": "Calvin Nhieu c.q.nhieu@student.tudelft.nl",
+  "contributors": [
+    {
+      "name": "Luc Koppens"
+    }
+  ],
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "mysql": "^2.12.0",
+    "url": "^0.11.0"
+  }
+}

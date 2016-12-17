@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ToDone Template</title>
+  </head>
+  <body>
+    <p>Todos</p>
+    <ul>
+      <% todos.forEach(function(todo) { %>
+        <li>
+          <%= todo.description %>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>
