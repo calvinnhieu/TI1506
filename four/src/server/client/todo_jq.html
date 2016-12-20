@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+	<head>
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="todo_jq.js"></script>
+
+	<title>To Done - A web app for all your todo list needs </title>
+	</head>
+
+	<body>
+		<header>
+			<nav>
+				<a href="#"> About</a> |
+				<a href="#"> Log in</a> |
+			</nav>
+		</header>
+		<main>
+			<div id="left-collumn">
+				<h1> Labels</h1>
+				<ul class="labels">
+				</ul>
+			</div>
+
+			<div id="right-collumn">
+				<nav>
+					<button type="button" class="filter-time-btn"> Chronological</button>
+					<button type="button" class="filter-priority-btn">Priority</button>
+				</nav>
+
+				<button type="button" class="add-btn">+Add TODO</button></li>
+				<!-- Add module -->
+				<div class="add-module">
+					<form>
+						Create<br/>
+						<input type="text" class="add-desc-input" placeholder="Description">
+						<input type="text" class="add-date-input" placeholder="Due date">
+						<input type="text" class="add-label-input" placeholder="Labels">
+						<input type="text" class="add-notes-input" placeholder="Notes">
+						<input type="text" class="add-priority-input" placeholder="Priority (1-3)">
+						<button type="button" class="finish-add-btn">Done</button>
+					</form>
+				</div>
+
+				<div class="todos-container">
+					<ul class="todos-list">
+
+					</ul>
+				</div>
+
+				<ul hidden>
+					<li>
+						<!-- Edit module -->
+						<div class="edit_module">
+							<form>
+								edit <br/>
+								<input type="text" class="desc-input" placeholder="Description">
+								<input type="text" class="date-input" placeholder="Date">
+								<input type="text" class="label-input" placeholder="Label">
+								<input type="text" class="notes-input" placeholder="Notes">
+								<input type="text" class="priority-input" placeholder="Priority (1-3)">
+								<button type="button" class="finish-edit-btn">Done</button>
+							</form>
+						</div>
+					</li>
+
+
+					<li>
+						<!-- Todo item -->
+						<div class="todo_item">
+							<form>
+								<button type="button" class="complete-btn">DONE</button>
+								some item name
+								<button type="button" class="edit-btn"> edit</button>
+								<button type="button" class="delete-btn"> delete</button>
+							</form>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</main>
+	</body>
+</html>

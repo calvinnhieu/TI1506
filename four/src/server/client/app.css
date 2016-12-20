@@ -1,0 +1,145 @@
+html, button, input {
+  font-family: Quicksand;
+}
+button:hover {
+  cursor: pointer;
+}
+a:active {
+  text-decoration: underline;
+}
+button[data-desc] {
+  position: relative;
+  cursor: pointer;
+}
+button[data-desc]:hover::after {
+  content: attr(data-desc);
+  position: absolute;
+  left: 0;
+  top: 20px;
+  min-width: 100px;
+  border: 1px #aaa solid;
+  border-radius: 8px;
+  background-color: #222;
+  padding: 5px;
+  color: #ccc;
+  font-size: 12px;
+  z-index: 1;
+  animation-name: fade_in;
+  animation-duration: 0.5s;
+}
+@keyframes fade_in {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+.flex {
+  display: flex;
+}
+.flex-grow {
+  flex-grow: 1;
+}
+.flex-col {
+  flex-direction: column;
+  align-items: center;
+}
+.flex-row {
+  flex-direction: row;
+}
+.xl-font {
+  font-size: 32px;
+}
+.l-font {
+  font-size: 24px;
+}
+.m-font {
+  font-size: 18px;
+}
+.s-font {
+  font-size: 12px;
+}
+.mar-bot-1 {
+  margin-bottom: 5px;
+}
+.mar-top-1 {
+  margin-top: 5px;
+}
+.mar-left-1 {
+  margin-left: 5px;
+}
+.mar-right-2 {
+  margin-right: 5px;
+}
+.mar-bot-2 {
+  margin-bottom: 10px;
+}
+.mar-top-2 {
+  margin-top: 10px;
+}
+.mar-left-2 {
+  margin-left: 10px;
+}
+.mar-right-2 {
+  margin-right: 10px;
+}
+.mar-bot-3 {
+  margin-bottom: 15px;
+}
+.mar-top-3 {
+  margin-top: 15px;
+}
+.mar-left-3 {
+  margin-left: 15px;
+}
+.mar-right-3 {
+  margin-right: 15px;
+}
+.light-text {
+  color: #999;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #eee;
+}
+.index-content {
+  height: 75vh;
+  justify-content: center;
+}
+.app-content {
+  margin-right: 150px;
+  margin-left: 150px;
+  justify-content: center;
+}
+.email-label::before {
+  font-family: FontAwesome;
+  content: "\f003";
+}
+.pw-label::before {
+  font-family: FontAwesome;
+  content: "\f13e";
+}
+.add-btn, .todos-container, .add-module, .add-list-module {
+  display: none;
+}
+.labels-container {
+  min-width: 150px;
+}
+.todo-item {
+  justify-content: space-between;
+}
+.todo-item-complete {
+  background: #4CAF50;
+}
+.todo-item-overdue {
+  background: #F44336;
+}
+.priority-1 {
+  background: #FF5722;
+}
+.priority-2 {
+  background: #FFC107;
+}
+.priority-3 {
+  background: #FFEB3B;
+}
