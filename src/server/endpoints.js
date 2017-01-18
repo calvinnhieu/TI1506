@@ -18,9 +18,9 @@ exports.initpoints = function(app){
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
   app.get('/authsuccess',
-    passport.authenticate('google', { failureRedirect: '/' }),
+    passport.authenticate('google', { failureRedirect: '/error' }),
     function(req, res) {
-      console.log('redirect')
+      console.log(res.req.client.parser.incoming.user)
       res.redirect('/todo.html');
     });
 
