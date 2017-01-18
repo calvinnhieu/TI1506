@@ -7,19 +7,9 @@ var mysql = require('mysql');
 var config = require('./config.js');
 var db = require('./db.js');
 var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = {};
 
-passport.use(new GoogleStrategy({
-    clientID: '638829096835-3m5fvrbsgmiui8bldbfcdgacnc90hm4j.apps.googleusercontent.com',
-    clientSecret: '17P4_hHWeHIe5NNMG2ji-el_',
-    callbackURL: "http://127.0.0.1:3000/authsuccess"
-  },
-  function(accessToken, refreshToken, profile, done) {
-       console.log(profile.id);
-  }
-));
 
 exports.initpoints = function(app){
   //ENDPOINTS
@@ -30,7 +20,8 @@ exports.initpoints = function(app){
   app.get('/authsuccess',
     passport.authenticate('google', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect('/');
+      console.log('redirect')
+      res.redirect('/todo.html');
     });
 
   app.get('/template', function(req, res) {
